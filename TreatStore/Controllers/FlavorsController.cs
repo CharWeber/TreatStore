@@ -39,10 +39,20 @@ namespace TreatStore.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
+      var FlavorExists = _db.Flavors.FirstOrDefault(entry => entry.Name == flavor.Name);
+
+      if (FlavorExists != null)
+      {
+        ViewBag.ErrorMessage = "This Flavor is already in production";
+        return View("Error");
+      }
+      else
+      {
       flavor.User = currentUser;
       _db.Flavors.Add(flavor);
       _db.SaveChanges();
       return RedirectToAction("Index");
+      }
     }
 
     [AllowAnonymous]

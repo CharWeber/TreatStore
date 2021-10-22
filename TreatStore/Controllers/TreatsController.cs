@@ -40,10 +40,20 @@ namespace TreatStore.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
+      var treatExists = _db.Treats.FirstOrDefault(entry => entry.Name == treat.Name);
+
+      if (treatExists != null)
+      {
+        ViewBag.ErrorMessage = "This treat is already in production";
+        return View("Error");
+      }
+      else
+      {
       treat.User = currentUser; 
       _db.Treats.Add(treat);
       _db.SaveChanges();
       return RedirectToAction("Index");
+      }
     }
 
     [AllowAnonymous]
