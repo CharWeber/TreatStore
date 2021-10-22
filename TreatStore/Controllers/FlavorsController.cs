@@ -11,6 +11,7 @@ using TreatStore.Models;
 
 namespace TreatStore.Controllers
 {
+  [Authorize]
   public class FlavorsController : Controller
   {
     private readonly TreatStoreContext _db;
@@ -22,6 +23,7 @@ namespace TreatStore.Controllers
       _userManager = userManager;
     }
 
+    [AllowAnonymous]
     public ActionResult Index()
     {
       return View(_db.Flavors.ToList());
@@ -43,6 +45,7 @@ namespace TreatStore.Controllers
       return RedirectToAction("Index");
     }
 
+    [AllowAnonymous]
     public ActionResult Details(int id)
     {
       ViewBag.NoTreats = _db.Treats.ToList().Count == 0;
