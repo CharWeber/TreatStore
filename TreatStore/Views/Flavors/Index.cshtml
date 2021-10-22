@@ -10,16 +10,18 @@
 <div class="list-grid">
   @if (Model.Any())
   {
-    <div class="content-card">
       @foreach(Flavor flavor in Model)
       {
-        <p>@Html.ActionLink($"{flavor.Name}", "Details", new {id=flavor.FlavorId})</p>
+        <div class="content-card">
+          <h3>@Html.ActionLink($"{flavor.Name}", "Details", new {id=flavor.FlavorId})</h3>
+        </div>
       }
-    </div>
   }
   else
   {
-    <h3>everything is pretty mild right now...</h3>
+    <div class="content-card">
+      <h3>everything is pretty mild right now...</h3>
+    </div>
   }
 </div>
 
