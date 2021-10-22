@@ -1,5 +1,5 @@
 using System;
-using System.Collections.generic;
+using System.Collections.Generic;
 
 namespace TreatStore.Models
 {
@@ -7,7 +7,7 @@ namespace TreatStore.Models
   {
     public int TreatId {get;set;}
     public string Name {get;set;}
-    public virtual User user {get;set;}
+    public virtual ApplicationUser User {get;set;}
     public virtual ICollection<FlavorTreat> FlavorTreatEntities {get;set;}
     
     public Treat()
