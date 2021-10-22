@@ -4,8 +4,12 @@
   <title>Pierre's Sweet Treats Store</title>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
   <link rel="stylesheet" href="~/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">@RenderBody()</div>
+  <div class="container"><div class="card">@RenderBody()</div></div>
+  @await Html.PartialAsync("_Navbar")
 </body>
 </html>

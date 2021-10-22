@@ -1,8 +1,51 @@
 @{
   Layout = "_Layout";
 }
-<h1>Home Page</h1>
 
-<p>@Html.ActionLink("Account", "Index", "Account")</p>
-<p>@Html.ActionLink("Treats", "Index", "Treats")</p>
-<p>@Html.ActionLink("Flavors", "Index", "Flavors")</p>
+@using TreatStore.Models
+  <h1>Welcomes to Pierres Sweet Treat Empire!</h1>
+  
+  @if (Model.Flavors.Count == 0 && Model.Treats.Count ==0)
+  {
+    <h3>Get started making Treats and Flavors below!</h3>
+  }
+  else
+  {
+    <h2>MENU</h2>
+    <div class="content-grid">
+      <div class="content-card">
+        @if (Model.Treats.Count == 0)
+        {
+          <h3>there are no treats on the menu yet!</h3>
+        }
+        else
+        {
+          <h2>Treats</h2>
+          @foreach (Treat treat in Model.Treats)
+          {
+            <p>@Html.ActionLink($"{treat.Name}", "Details", "Treats", new {id = treat.TreatId})</p>
+          }
+        }
+      </div>
+      <div class="content-card">
+        @if (Model.Flavors.Count == 0)
+        {
+          <h3>There are no special Flavors on the menu yet!</h3>
+        }
+        else
+        {
+          <h2>Flavors</h2>
+          @foreach (Flavor flavor in Model.Flavors)
+          {
+            <p>@Html.ActionLink($"{flavor.Name}", "Details", "Flavors", new {id = flavor.FlavorId})</p>
+          }
+        }
+      </div>
+    </div>
+  }
+  <hr>
+  <div class="content-grid-3">
+    <p>@Html.ActionLink("Treats", "Index", "Treats")</p>
+    <p>@Html.ActionLink("Account", "Index", "Account")</p>
+    <p>@Html.ActionLink("Flavors", "Index", "Flavors")</p>
+  </div>

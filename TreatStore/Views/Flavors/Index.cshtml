@@ -7,17 +7,20 @@
 
 <h1>Flavors</h1>
 
-@if (Model.Any())
-{
-  @foreach(Flavor flavor in Model)
+<div class="list-grid">
+  @if (Model.Any())
   {
-    <p>@Html.ActionLink($"{flavor.Name}", "Details", new {id=flavor.FlavorId})</p>
+    <div class="content-card">
+      @foreach(Flavor flavor in Model)
+      {
+        <p>@Html.ActionLink($"{flavor.Name}", "Details", new {id=flavor.FlavorId})</p>
+      }
+    </div>
   }
-}
-else
-{
-  <h3>everything is pretty mild right now...</h3>
-}
+  else
+  {
+    <h3>everything is pretty mild right now...</h3>
+  }
+</div>
 
 <p>@Html.ActionLink("Add a Flavor", "Create")</p>
-<p>@Html.ActionLink("Home", "Index", "Home")</p>

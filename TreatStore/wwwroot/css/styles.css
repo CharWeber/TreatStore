@@ -1,3 +1,71 @@
 .container{
   text-align:center;
+  border-radius: 25px;
+}
+.navbar-div{
+  display: flex;
+	position:fixed;
+	bottom:0px;
+	left:0px;
+	width:100%;
+	color:rgb(0, 0, 0);
+	background:rgb(224, 168, 231);
+	padding:8px;
+  justify-content: space-evenly;
+}
+.content-grid
+{
+  display:grid;
+  grid-template-columns: 50% 50%;
+}
+.content-grid-3
+{
+  display:grid;
+  grid-template-columns: 33% 33% 33%;
+}
+.list-grid
+{
+  display:grid;
+  grid-auto-flow: row;
+}
+.content-card
+{
+  min-width:50%;
+  max-width:85%;
+  margin:5%;
+  padding:5%;
+  border-style:solid;
+  border-color:rgb(76, 2, 54);
+  border-radius: 25px;
+  background-color: rgb(219, 149, 183);
+}
+.card{
+  background-color: rgba(219, 149, 183, 0.963);
+  color: black;
+  min-width:50%;
+  max-width:85%;
+  margin:5%;
+  padding:5%;
+  border-style: double;
+  border-color:rgb(76, 2, 54);
+  border-radius: 25px;
+  text-align:center;
+}
+body{
+  background: url("../img/MainBg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+p, h1, h2, h3{
+  font-family: 'Aclonica', sans-serif;
+}
+
+a{
+  font-family: 'Aclonica', sans-serif;
+  color:Black;
+  text-decoration:underline;
+  text-size-adjust: large;
 }

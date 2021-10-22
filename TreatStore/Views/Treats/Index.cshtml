@@ -7,17 +7,21 @@
 
 <h1>Treats Too Sweet</h1>
 
-@if (Model.Any())
-{
-  @foreach(Treat treat in Model)
+<div class="list-grid">
+  @if (Model.Any())
   {
-    <p>@Html.ActionLink($"{treat.Name}", "Details", new {id=treat.TreatId})</p>
+    <div class="content-card">
+      @foreach(Treat treat in Model)
+      {
+        <p>@Html.ActionLink($"{treat.Name}", "Details", new {id=treat.TreatId})</p>
+      }
+    </div>
   }
-}
-else
-{
-  <h3> Nothing has come out of the oven yet...</h3>
-}
+  else
+  {
+    <h3> Nothing has come out of the oven yet...</h3>
+  }
+</div>
 
 <p>@Html.ActionLink("Add a treat", "Create")</p>
 <p>@Html.ActionLink("Home", "Index", "Home")</p>
