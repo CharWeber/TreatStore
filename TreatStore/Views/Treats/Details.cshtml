@@ -1,0 +1,48 @@
+@{
+  Layout ="_Layout";
+}
+@using TreatStore.Models
+@model TreatStore.Models.Treat
+
+<h3>Treat Details</h3>
+<h3>@Html.DisplayNameFor(model =>model.Name) : @Html.DisplayFor(model=> model.Name)</h3>
+
+@if(Model.FlavorTreatEntities.Count == 0 )
+{
+  <p>What you see is what you get</p>
+}
+else
+{
+  <h3>Flavors Available for @Html.DisplayFor(model => model.Name)</h3>
+  @foreach (var join in Model.FlavorTreatEntities)
+  {
+    <p>@join.Flavor.Name</p>
+    @using(Html.BeginForm("DeleteFlavor", "Treats"))
+    {
+      @Html.Hidden("joinId", @join.FlavorTreatId)
+      <input type="submit" value="Delete" class="btn btn-dark"/>
+    }
+  }
+}
+
+<hr>
+
+@if(ViewBag.NoFlavors)
+{
+  <h2>This Treat has no Special Flavors</h2>
+}
+else
+{
+  <p>Request a flavor for this treat!</p>
+  @using (Html.BeginForm("AddFlavor", "Treats"))
+  {
+    @Html.HiddenFor(model => model.TreatId)
+
+    @Html.Label("Add Flavor")
+    @Html.DropDownList("FlavorId")
+
+    <input type="submit" value="Make!" class="btn btn-dark"/>
+  }
+}
+
+<p>@Html.ActionLink("Back", "Index", "Treats")</p>

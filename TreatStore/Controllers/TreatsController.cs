@@ -46,10 +46,11 @@ namespace TreatStore.Controllers
 
     public ActionResult Details(int id)
     {
+      ViewBag.NoFlavors = _db.Flavors.ToList().Count == 0;
       ViewBag.FlavorId = new SelectList (_db.Flavors, "FlavorId", "Name");
       var thisTreat = _db.Treats
         .Include(treat => treat.FlavorTreatEntities)
-        .ThenInclude(join => join.FlavorId)
+        .ThenInclude(join => join.Flavor)
         .FirstOrDefault(treat => treat.TreatId == id);
       return View(thisTreat);
     }
@@ -88,10 +89,25 @@ namespace TreatStore.Controllers
     {
       if(FlavorId != 0)
       {
-        _db.FlavorTreats.Add( new FlavorTreat() {FlavorId = FlavorId, TreatId = treat.TreatId});
+        var joinExists = _db.FlavorTreats.FirstOrDefault(join => join.FlavorId == FlavorId && join.TreatId == treat.TreatId);
+
+        if (joinExists != null)
+        {
+          ViewBag.ErrorMessage = "This treat already has this flavor";
+          return View("Error");
+        }
+        else
+        {
+          _db.FlavorTreats.Add(new FlavorTreat() {FlavorId = FlavorId, TreatId = treat.TreatId});
+          _db.SaveChanges();
+          return RedirectToAction("Index");
+        }
       }
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      else
+      {
+        ViewBag.ErrorMessage = "This Flavor no longer Exists";
+        return View("Error");
+      }
     }
 
     [HttpPost]
@@ -101,6 +117,11 @@ namespace TreatStore.Controllers
       _db.FlavorTreats.Remove(thisJoin);
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+    public ActionResult Error()
+    {
+      return View();
     }
 
   }

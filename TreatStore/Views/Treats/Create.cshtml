@@ -1,0 +1,16 @@
+@{
+  Layout = "_Layout";
+}
+
+@using TreatStore.Models
+@model TreatStore.Models.Treat
+
+@using (Html.BeginForm())
+{
+
+  @Html.LabelFor(model => model.Name)
+  @Html.TextBoxFor(model => model.Name)
+
+  <input type = 'submit' value="Add Treat"/>
+}
+<p>@Html.ActionLink("Back", "Index")</p>

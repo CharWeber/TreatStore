@@ -45,10 +45,11 @@ namespace TreatStore.Controllers
 
     public ActionResult Details(int id)
     {
+      ViewBag.NoTreats = _db.Treats.ToList().Count == 0;
       ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name");
       var thisFlavor = _db.Flavors
         .Include(flavor => flavor.FlavorTreatEntities)
-        .ThenInclude(join => join.TreatId)
+        .ThenInclude(join => join.Treat)
         .FirstOrDefault(flavor =>flavor.FlavorId ==id);
       return View(thisFlavor);
     }
@@ -87,19 +88,41 @@ namespace TreatStore.Controllers
     {
       if (TreatId != 0)
       {
-        _db.FlavorTreats.Add( new FlavorTreat(){FlavorId = flavor.FlavorId, TreatId = TreatId});
+        var joinExists = _db.FlavorTreats.FirstOrDefault(join => join.FlavorId == flavor.FlavorId && join.TreatId == TreatId);
+      
+        if (joinExists != null)
+        {
+          ViewBag.ErrorMessage = "This Flavor is already in production for this treat";
+          return View("Error");
+        }
+        else
+        {
+          _db.FlavorTreats.Add( new FlavorTreat(){FlavorId = flavor.FlavorId, TreatId = TreatId});
+          _db.SaveChanges();
+          return RedirectToAction("Index");
+        }
+      
       }
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      else
+      {
+        ViewBag.ErrorMessage = "This treat no longer exists";
+        return View("Error");
+      }
+
     }
 
     [HttpPost]
     public ActionResult DeleteTreat(int joinId)
     {
-      var thisJoin = _db.FlavorTreats.FirstOrDefault(flavor =>flavor.FlavorId == joinId);
+      var thisJoin = _db.FlavorTreats.FirstOrDefault(entry =>entry.FlavorTreatId == joinId);
       _db.FlavorTreats.Remove(thisJoin);
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+    public ActionResult Error()
+    {
+      return View();
     }
 
   }

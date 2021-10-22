@@ -1,0 +1,23 @@
+@{
+  Layout= "_Layout";
+}
+
+@using TreatStore.Models;
+@model IEnumerable<TreatStore.Models.Flavor>
+
+<h1>Flavors</h1>
+
+@if (Model.Any())
+{
+  @foreach(Flavor flavor in Model)
+  {
+    <p>@Html.ActionLink($"{flavor.Name}", "Details", new {id=flavor.FlavorId})</p>
+  }
+}
+else
+{
+  <h3>everything is pretty mild right now...</h3>
+}
+
+<p>@Html.ActionLink("Add a Flavor", "Create")</p>
+<p>@Html.ActionLink("Home", "Index", "Home")</p>
