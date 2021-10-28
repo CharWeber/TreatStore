@@ -69,7 +69,7 @@ namespace TreatStore.Controllers
 
     public ActionResult Edit(int id)
     {
-      var thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
       return View(thisFlavor);
     }
 

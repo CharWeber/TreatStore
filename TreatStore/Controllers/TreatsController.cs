@@ -88,7 +88,7 @@ namespace TreatStore.Controllers
       return View(thisTreat);
     }
 
-    [HttpPost, ActionName("Index")]
+    [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
       var thisTreat = _db.Treats.FirstOrDefault(treat =>treat.TreatId == id);
